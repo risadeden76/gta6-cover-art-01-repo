@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Sunset Cover Maker</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">VS</span> Vice Sunset <em>Cover Maker</em></div>
+  <p class="tagline">Your photo + a caption &rarr; a multi-panel sunset cover, exported as PNG. Photos never leave this machine.</p>
+</header>
+<main class="app">
+  <section class="controls" aria-label="Cover controls">
+    <h1>Make your cover</h1>
+    <ol class="steps">
+      <li>Add a photo (or use a sample)</li>
+      <li>Pick a layout and a size</li>
+      <li>Write the caption, export the PNG</li>
+    </ol>
+
+    <div class="group">
+      <h2>Photos</h2>
+      <label class="file-label">Add photos from your machine
+        <input id="photos" type="file" accept="image/*" multiple>
+      </label>
+      <div class="row">
+        <button id="sample-boulevard" type="button">Sample: Boulevard</button>
+        <button id="sample-pier" type="button">Sample: Pier</button>
+      </div>
+      <p id="photo-list" class="hint">2 sample scenes loaded. Add your own photos to use them instead.</p>
+    </div>
+
+    <div class="group">
+      <h2>Layout</h2>
+      <div class="row" role="group" aria-label="Layout">
+        <button id="layout-poster" type="button" class="choice active">Vice Poster</button>
+        <button id="layout-triple" type="button" class="choice">Triple Strip</button>
+        <button id="layout-grid" type="button" class="choice">Four Grid</button>
+      </div>
+      <h2>Post size</h2>
+      <div class="row" role="group" aria-label="Post size">
+        <button id="size-square" type="button" class="choice active">1080 &times; 1080</button>
+        <button id="size-portrait" type="button" class="choice">1080 &times; 1350</button>
+        <button id="size-wide" type="button" class="choice">1920 &times; 1080</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2>Caption</h2>
+      <label>Caption <input id="caption" type="text" maxlength="32" value="Sunset Heist"></label>
+      <label>Small line <input id="subcaption" type="text" maxlength="48" value="NEON BOULEVARD &middot; LEONIDA"></label>
+      <label>Colour grade
+        <select id="grade">
+          <option value="sunset" selected>Vice Sunset &mdash; orange &amp; magenta</option>
+          <option value="neon">Neon Nights &mdash; cyan &amp; magenta</option>
+          <option value="gold">Golden Hour &mdash; amber</option>
+          <option value="noir">Palm Noir &mdash; deep purple</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <h2>Panel</h2>
+      <label>Panel
+        <select id="panel">
+          <option value="0">Panel 1 &mdash; hero</option>
+          <option value="1">Panel 2</option>
+          <option value="2">Panel 3</option>
+          <option value="3">Panel 4</option>
+        </select>
+      </label>
+      <label>Photo in this panel
+        <select id="panel-photo"></select>
+      </label>
+      <label>Zoom <input id="zoom" type="range" min="100" max="220" value="100"><span id="zoom-val">100%</span></label>
+      <label>Move left / right <input id="panx" type="range" min="-50" max="50" value="0"></label>
+      <label>Move up / down <input id="pany" type="range" min="-50" max="50" value="0"></label>
+      <div class="row">
+        <button id="fill-all" type="button">Fill every panel with this photo</button>
+      </div>
+    </div>
+
+    <div class="group export-group">
+      <button id="export" type="button" class="export">Export PNG</button>
+      <p id="status" role="status"></p>
+    </div>
+  </section>
+
+  <section class="preview" aria-label="Live preview">
+    <canvas id="cover" width="1080" height="1080" aria-label="The cover preview"></canvas>
+    <p class="preview-note">Live preview &mdash; what you see is what the PNG holds.</p>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

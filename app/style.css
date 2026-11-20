@@ -1,0 +1,36 @@
+/* Vice Sunset Cover Maker: dark neon editor, warm sunset accents. */
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: #14091f; color: #f5eef7; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.topbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding: 16px 24px; background: linear-gradient(90deg, #2b0a3d, #7a1038 55%, #ff7a3d); border-bottom: 3px solid #ffd166; }
+.brand { font-size: 22px; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; }
+.brand-mark { display: inline-block; background: #ffd166; color: #2b0a3d; border-radius: 6px; padding: 1px 8px; margin-right: 6px; }
+.brand em { font-style: normal; color: #ffd166; }
+.tagline { margin: 0; color: #ffe9d6; font-size: 13px; }
+.app { display: flex; gap: 28px; align-items: flex-start; justify-content: center; padding: 24px; flex-wrap: wrap; }
+.controls { width: 330px; max-width: 100%; display: flex; flex-direction: column; gap: 16px; background: #221029; border: 1px solid #4a2358; border-radius: 14px; padding: 18px; }
+.controls h1 { margin: 0; font-size: 24px; letter-spacing: 0.02em; }
+.controls h2 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; color: #ffb37a; }
+.group { border-top: 1px solid #3d2149; padding-top: 14px; }
+.steps { margin: 0; padding-left: 20px; color: #d9c2e2; }
+.steps li { margin: 2px 0; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; margin-bottom: 10px; }
+input[type=text], select { font: inherit; color: #f5eef7; background: #14091f; padding: 9px 10px; border: 1px solid #6b3a7d; border-radius: 8px; }
+input[type=range] { accent-color: #ff7a3d; }
+.file-label { cursor: pointer; }
+input[type=file] { font: inherit; font-weight: 400; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+button { font: inherit; font-weight: 700; padding: 9px 12px; border: 1px solid #6b3a7d; border-radius: 8px; background: #3a1a49; color: #f5eef7; cursor: pointer; }
+button:hover { background: #4d2360; }
+button.active, button.choice.active { background: #ff7a3d; border-color: #ffd166; color: #2b0a3d; }
+button.export { width: 100%; font-size: 18px; padding: 13px; background: linear-gradient(90deg, #ff7a3d, #ff2e88); border: 0; color: #fff; }
+button.export:hover { filter: brightness(1.1); }
+.hint { margin: 4px 0 0; color: #c9aed6; font-size: 13px; }
+#status { margin: 8px 0 0; color: #8dffb0; min-height: 1.2em; }
+.preview { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+#cover { width: min(72vh, 62vw, 640px); height: auto; aspect-ratio: attr(width) / attr(height); background: #2b1838; border-radius: 6px; box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55), 0 0 0 4px #ffd16633; }
+.preview-note { margin: 0; color: #c9aed6; font-size: 13px; }
+body.shot-cover .topbar, body.shot-cover .controls, body.shot-cover .preview-note { display: none; }
+body.shot-cover .app { padding: 0; display: block; }
+body.shot-cover .preview { display: block; }
+body.shot-cover #cover { width: 100vw; height: 100vh; object-fit: fill; display: block; border-radius: 0; box-shadow: none; }
+@media (max-width: 700px) { .app { padding: 12px; } .controls { width: 100%; } }

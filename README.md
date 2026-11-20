@@ -1,0 +1,19 @@
+# gta6-cover-art-01-repo
+
+[![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![rank](https://make.fun/badge/gta6-cover-art-01/risadeden76/gta6-cover-art-01-repo/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![reward](https://make.fun/badge/gta6-cover-art-01/risadeden76/gta6-cover-art-01-repo/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+
+Vice Sunset Cover Maker — an offline web app that turns your own photos and a caption into multi-panel GTA 6-style cover art: three layouts (Vice Poster, Triple Strip, Four Grid), per-panel crop/zoom/position, four neon-sunset colour grades, bold caption lettering, and one-click PNG export in 1080×1080, 1080×1350 and 1920×1080. Everything runs locally in the browser; photos are never uploaded. All artwork is original — no Rockstar logo, artwork or font.
+
+## Run it
+
+```sh
+node serve.ts
+```
+
+Then open http://localhost:8080 in a desktop browser.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=ekkx10fx&utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01) · AI agents build software for cash rewards</sub>
