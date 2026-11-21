@@ -2,7 +2,6 @@
 // crop and position, live preview, PNG export. A `?shot=` query sets up a
 // fixed scene for a screenshot instead (./shots.js).
 import { drawCover, SIZES } from './cover.js';
-import { paintSample } from './samples.js';
 import { runShot } from './shots.js';
 
 const canvas = document.getElementById('cover');
@@ -28,12 +27,18 @@ const state = {
   panels: [
     { photo: 0, zoom: 100, panX: 0, panY: 0 },
     { photo: 1, zoom: 100, panX: 0, panY: 0 },
+    { photo: 0, zoom: 115, panX: 0, panY: 0 },
+    { photo: 1, zoom: 115, panX: 0, panY: 0 },
+    { photo: 0, zoom: 130, panX: 0, panY: 0 },
+    { photo: 1, zoom: 130, panX: 0, panY: 0 },
     { photo: 0, zoom: 110, panX: 0, panY: 0 },
     { photo: 1, zoom: 110, panX: 0, panY: 0 },
+    { photo: 0, zoom: 125, panX: 0, panY: 0 },
   ],
 };
 
 function panelCount() {
+  if (state.layout === 'nine') return 9;
   return state.layout === 'grid' ? 4 : 3;
 }
 
@@ -82,8 +87,16 @@ export function loadImage(url) {
   });
 }
 
-function addSample(kind, name) {
-  state.photos.push({ name, image: paintSample(kind) });
+/** Loads a real sample photograph (kit starter photo) into the photo list. */
+async function addSample(kind, name) {
+  if (state.photos.some((p) => p.name === name)) return;
+  try {
+    const image = await loadImage(`./samples/${kind}.jpg`);
+    state.photos.push({ name, image });
+  } catch {
+    status.textContent = `Could not load the ${name} sample photo.`;
+    return;
+  }
   refreshPhotoUI();
   redraw();
 }
@@ -115,6 +128,7 @@ document.getElementById('sample-pier').addEventListener('click', () => addSample
 document.getElementById('layout-poster').addEventListener('click', () => setChoice('layout', 'layout', 'poster'));
 document.getElementById('layout-triple').addEventListener('click', () => setChoice('layout', 'layout', 'triple'));
 document.getElementById('layout-grid').addEventListener('click', () => setChoice('layout', 'layout', 'grid'));
+document.getElementById('layout-nine').addEventListener('click', () => setChoice('layout', 'layout', 'nine'));
 document.getElementById('size-square').addEventListener('click', () => setChoice('size', 'sizeKey', 'square'));
 document.getElementById('size-portrait').addEventListener('click', () => setChoice('size', 'sizeKey', 'portrait'));
 document.getElementById('size-wide').addEventListener('click', () => setChoice('size', 'sizeKey', 'wide'));
@@ -162,13 +176,13 @@ if (shot) {
     setChoice('layout', 'layout', layout);
     setChoice('size', 'sizeKey', sizeKey);
     if (state.photos.length === 0) {
-      addSample('boulevard', 'Sample: Boulevard');
-      addSample('pier', 'Sample: Pier');
+      await addSample('boulevard', 'Sample: Boulevard');
+      await addSample('pier', 'Sample: Pier');
     }
-    state.panels[0].photo = 0;
-    state.panels[1].photo = 1;
-    state.panels[2].photo = 0;
-    state.panels[3].photo = 1;
+    for (let i = 0; i < panelCount(); i++) {
+      state.panels[i].photo = i % 2;
+      state.panels[i].zoom = 100 + (i % 3) * 12;
+    }
     refreshPhotoUI();
     redraw();
   });

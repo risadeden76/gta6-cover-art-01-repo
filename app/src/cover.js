@@ -25,6 +25,13 @@ export function layoutPanels(layout, count) {
       [2 / 3, 0, 1 / 3, 1],
     ].slice(0, count);
   }
+  if (layout === 'nine') {
+    const cells = [];
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) cells.push([c / 3, r / 3, 1 / 3, 1 / 3]);
+    }
+    return cells.slice(0, count);
+  }
   if (layout === 'grid') {
     return [
       [0, 0, 0.5, 0.5],
@@ -69,6 +76,38 @@ export function drawPhotoInPanel(ctx, photo, rect, panel) {
     const dy = y + (h - ph) / 2 + ((panel.panY ?? 0) / 50) * (ph - h) * 0.5;
     ctx.drawImage(img, dx, dy, pw, ph);
   }
+  ctx.restore();
+}
+
+/** Deterministic film grain: a small noise tile, drawn over the panels at low
+ * opacity so the cover reads as printed poster art, not flat vector. */
+let grainPattern = null;
+function getGrainPattern(ctx) {
+  if (grainPattern) return grainPattern;
+  const tile = document.createElement('canvas');
+  tile.width = 128;
+  tile.height = 128;
+  const tctx = tile.getContext('2d');
+  const img = tctx.createImageData(128, 128);
+  let seed = 1234567;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+  for (let i = 0; i < img.data.length; i += 4) {
+    const v = Math.floor(rnd() * 255);
+    img.data[i] = v; img.data[i + 1] = v; img.data[i + 2] = v; img.data[i + 3] = 255;
+  }
+  tctx.putImageData(img, 0, 0);
+  grainPattern = ctx.createPattern(tile, 'repeat');
+  return grainPattern;
+}
+
+export function grainCover(ctx) {
+  const pattern = getGrainPattern(ctx);
+  if (!pattern) return;
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.fillStyle = pattern;
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.restore();
 }
 
@@ -211,6 +250,7 @@ export function drawCover(canvas, state) {
     const inset = [rect[0] + gutter / 2, rect[1] + gutter / 2, rect[2] - gutter, rect[3] - gutter];
     gradePanel(ctx, inset, grade);
   });
-  if (state.layout !== 'triple') drawPalmsOnHero(ctx, panels[0]);
+  if (state.layout === 'poster' || state.layout === 'grid') drawPalmsOnHero(ctx, panels[0]);
+  grainCover(ctx);
   drawCaption(ctx, state.caption, state.subcaption, grade);
 }
